@@ -4,7 +4,6 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    @* set the icon *@
     <link rel="icon" href="~/favicon.ico" />
     <title>@ViewData["Title"] - Micro MVC ECommerce</title>
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
@@ -26,9 +25,12 @@
             </div>
         </nav>
     </header>
+
     <div class="">
-        <main role="main" class="pb-3 flex">
-            @Html.Partial("_FilterSideBar")
+        <main role="main" class="flex flex-row">
+            <div class="">
+                @Html.Partial("_FilterSideBar")
+            </div>
             <div class="">
                 @RenderBody()
             </div>

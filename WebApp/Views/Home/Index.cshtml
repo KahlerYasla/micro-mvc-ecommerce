@@ -1,4 +1,8 @@
-﻿<div id="productList" class="grid grid-cols-3 gap-4">
+﻿@{
+    ViewData["Title"] = "Listing";
+}
+
+<div id="productList" class="flex flex-row flex-wrap overflow-y-scroll gap-4 pr-72 pb-6">
     <script>
         // Fetch the product data asynchronously
         fetch('/api/products')
@@ -8,8 +12,24 @@
                 const productList = document.getElementById('productList');
                 data.forEach(product => {
                     const productCard = document.createElement('div');
-                    productCard.classList.add('bg-gray-100', 'p-4', 'rounded-lg', 'shadow-md');
-                    productCard.innerText = product.name;
+                    productCard.classList.add('p-4', 'rounded-lg', 'border', 'border', 'w-full', 'h-fit');
+
+                    const productName = document.createElement('h2');
+                    productName.innerText = product.name;
+                    productName.classList.add('text-base', 'font-semibold');
+                    productCard.appendChild(productName);
+
+
+                    const productDescription = document.createElement('p');
+                    productDescription.innerText = product.description;
+                    productDescription.classList.add('text-sm');
+                    productCard.appendChild(productDescription);
+
+                    const productPrice = document.createElement('p');
+                    productPrice.innerText = product.price + ' $';
+                    productPrice.classList.add('text-sm', 'text-green-500');
+                    productCard.appendChild(productPrice);
+
                     productList.appendChild(productCard);
                 });
             })
