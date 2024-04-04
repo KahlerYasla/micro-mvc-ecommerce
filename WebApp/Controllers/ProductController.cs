@@ -9,8 +9,8 @@ namespace WebApp.Controllers
     public class ProductsController : Controller
     {
         // Dummy data for testing
-        private static List<Product> productsListFromDB = new List<Product>
-            {
+        private static readonly List<Product> productsListFromDB = new()
+        {
                 new Product { Id = 1, Name = "CWPC", Description = "Complete Web Dev Course", Price = 10.0m, Category = "Csharp" },
                 new Product { Id = 2, Name = "Intro Py", Description = "Intro to Python", Price = 5.0m, Category = "Python" },
                 new Product { Id = 3, Name = "Adv Py", Description = "Advanced Python", Price = 7.0m, Category = "Python" },
@@ -37,7 +37,7 @@ namespace WebApp.Controllers
             string[] categories = category.Split(',');
 
             // Filter the products
-            List<Product> products = new List<Product>();
+            List<Product> products = new();
             foreach (var cat in categories)
             {
                 foreach (var product in ProductsController.productsListFromDB)

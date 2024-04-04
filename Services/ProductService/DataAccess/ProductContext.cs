@@ -1,4 +1,5 @@
-using System.Data.Entity;
+using Microsoft.EntityFrameworkCore;
+using ProductService.Models;
 
 namespace ProductService.DataAccess
 {
@@ -6,11 +7,5 @@ namespace ProductService.DataAccess
     {
         public DbSet<Product> Products { get; set; }
         public DbSet<Category> Categories { get; set; }
-
-        public ProductContext() : base("name=ProductContext")
-        {
-            // Database initialization strategy
-            Database.SetInitializer(new CreateDatabaseIfNotExists<ProductContext>());
-        }
     }
 }

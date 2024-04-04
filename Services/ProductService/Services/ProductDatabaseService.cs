@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using ProductService.DataAccess;
 using ProductService.Models;
 
 namespace ProductService.Services
@@ -19,16 +20,10 @@ namespace ProductService.Services
             IQueryable<Product> products = _context.Products;
 
             // Apply any filtering logic based on the query parameters
-            if (!string.IsNullOrEmpty(query.Name))
+            if (!string.IsNullOrEmpty(query.Category))
             {
-                products = products.Where(p => p.Name.Contains(query.Name));
+                products = products.Where(p => p.CategoryId == _context.Categories.FirstOrDefault(c => c.Name == query.Category)!.Id);
             }
-
-            // Example of additional filtering logic
-            // if (query.CategoryId.HasValue)
-            // {
-            //     products = products.Where(p => p.CategoryId == query.CategoryId.Value);
-            // }
 
             // Retrieve the filtered list of products
             List<Product> productList = products.ToList();

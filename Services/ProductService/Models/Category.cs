@@ -1,4 +1,4 @@
-namespace ProductsService.Models
+namespace ProductService.Models
 {
     public class Category
     {

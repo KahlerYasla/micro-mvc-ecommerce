@@ -3,13 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Web.Http;
+using Microsoft.AspNetCore.Mvc;
 using ProductService.Models;
 using ProductService.Services;
 
 namespace ProductService.Controllers
 {
-    public class ProductController : ApiController
+    [ApiController]
+    [Route("api/[controller]")]
+    public class ProductController : ControllerBase
     {
         private readonly ProductDatabaseService _productDatabaseService;
 
@@ -20,12 +22,14 @@ namespace ProductService.Controllers
 
         // POST: api/product
         [HttpPost]
-        public IHttpActionResult GetProductList(ProductQuery query)
+        public IActionResult GetProductList([FromBody] ProductQuery query)
         {
+            DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss.fff");
+
             try
             {
                 // Retrieve the list of products from the database based on the query
-                List<Product> productList = _productDatabaseService.GetProductList(query);
+                List<Models.Product> productList = _productDatabaseService.GetProductList(query);
 
                 if (productList != null && productList.Any())
                 {
@@ -39,7 +43,7 @@ namespace ProductService.Controllers
             catch (Exception ex)
             {
                 // Log or handle exception
-                return InternalServerError(ex);
+                return StatusCode((int)HttpStatusCode.InternalServerError);
             }
         }
     }
