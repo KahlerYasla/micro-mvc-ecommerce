@@ -1,40 +1,29 @@
 ﻿@{
-    ViewData["Title"] = "Listing";
+    <div id="productsContainer"></div>
 }
 
-<div id="productList" class="flex flex-row flex-wrap overflow-y-scroll gap-4 pr-72 pb-6">
-    <script>
-        // Fetch the product data asynchronously
-        fetch('/api/products')
-            .then(response => response.json())
-            .then(data => {
-                // Update the product list dynamically
-                const productList = document.getElementById('productList');
-                data.forEach(product => {
-                    const productCard = document.createElement('div');
-                    productCard.classList.add('p-4', 'rounded-lg', 'border', 'border', 'w-full', 'h-fit');
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+    function handleCheckboxChange(event) {
+        const selectedCategories = Array.from(document.querySelectorAll('input[type="checkbox"]:checked'))
+            .map(checkbox => checkbox.value);
 
-                    const productName = document.createElement('h2');
-                    productName.innerText = product.name;
-                    productName.classList.add('text-base', 'font-semibold');
-                    productCard.appendChild(productName);
+        console.log('Selected categories:', selectedCategories);
 
+        $.ajax({
+            url: `/api/products/${selectedCategories.join(',')}`,
+            method: 'GET',
+            success: function (data) {
+                $('#productsContainer').html(data);
+            },
+            error: function (xhr, status, error) {
+                console.error('Error fetching products:', error);
+            }
+        });
+    }
 
-                    const productDescription = document.createElement('p');
-                    productDescription.innerText = product.description;
-                    productDescription.classList.add('text-sm');
-                    productCard.appendChild(productDescription);
-
-                    const productPrice = document.createElement('p');
-                    productPrice.innerText = product.price + ' $';
-                    productPrice.classList.add('text-sm', 'text-green-500');
-                    productCard.appendChild(productPrice);
-
-                    productList.appendChild(productCard);
-                });
-            })
-            .catch(error => {
-                console.error('Error fetching product data:', error);
-            });
-    </script>
-</div>
+    // Attach event listener to checkboxes
+    $(document).ready(function () {
+        $('input[type="checkbox"]').on('change', handleCheckboxChange);
+    });
+</script>

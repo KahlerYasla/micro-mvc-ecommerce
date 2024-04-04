@@ -14,14 +14,20 @@
 
 <body class="flex flex-col h-screen m-0">
     <header>
-        <nav class="border-b h-fit py-4 flex justify-start align-middle mb-4">
-            <div class="mx-72 flex gap-2">
+        <nav class="border-b h-fit py-4 flex justify-between md:justify-start align-middle mb-4">
+            <div class="mx-4 md:mx-72 flex gap-2">
                 <i class="material-icons">
                     dashboard
                 </i>
-                <a class="" asp-area="" asp-controller="Home" asp-action="Index">
-                    Micro MVC ECommerce
+                <a class="text-center align-middle pt-[1.4px]" asp-area="" asp-controller="Home" asp-action="Index">
+                    Micro Courses
                 </a>
+
+            </div>
+            <div class="flex md:hidden">
+                <i class="material-icons mr-4" id="menu">
+                    menu
+                </i>
             </div>
         </nav>
     </header>
@@ -31,14 +37,14 @@
             <div class="">
                 @Html.Partial("_FilterSideBar")
             </div>
-            <div class="">
+            <div class="w-full">
                 @RenderBody()
             </div>
         </main>
     </div>
 
     <footer class="border-t mt-auto">
-        <div class="mx-72 py-4">
+        <div class="mx-4 md:mx-72 py-4">
             &copy; Berkay Aslan - <a href="https://github.com/KahlerYasla?tab=repositories">GitHub</a>
         </div>
     </footer>

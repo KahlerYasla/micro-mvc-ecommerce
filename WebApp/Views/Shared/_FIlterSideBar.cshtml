@@ -1,22 +1,30 @@
-<div class="flex-col p-4 pb-0 pt-0 sm:w-72 text-end hidden sm:flex sticky top-10">
-    <h2 class="font-extrabold mb-4">Filter by<br>Programming Language</h2>
-    <ul class="space-y-2">
-        <li>
-            <label class="flex items-center w-full justify-end">
-                <span class="mr-2">C#</span>
-                <input type="checkbox" class="form-checkbox" />
-            </label>
-            <label class="flex items-center w-full justify-end">
-                <span class="mr-2">Java</span>
-                <input type="checkbox" class="form-checkbox" />
-            </label>
-            <label class="flex items-center w-full justify-end">
-                <span class="mr-2">JavaScript</span>
-                <input type="checkbox" class="form-checkbox" />
-            </label>
-            <label class="flex items-center w-full justify-end">
-                <span class="mr-2">Python</span>
-                <input type="checkbox" class="form-checkbox" />
-        </li>
-    </ul>
-</div>
+@{
+    <div class="flex-col p-4 pb-0 pt-0 md:w-72 text-end hidden md:flex sticky top-10">
+        <h2 class="font-extrabold mb-4">Choose Courses by<br>Programming Language</h2>
+        <ul class="space-y-2">
+            <li>
+                <label class="flex items-center w-full justify-end">
+                    <span class="mr-2">C#</span>
+                    <input type="checkbox" class="form-checkbox" onchange="handleCheckboxChange(event)" value="Csharp" />
+                </label>
+                <label class="flex items-center w-full justify-end">
+                    <span class="mr-2">Java</span>
+                    <input type="checkbox" class="form-checkbox" onchange="handleCheckboxChange(event)" value="Java" />
+                </label>
+                <label class="flex items-center w-full justify-end">
+                    <span class="mr-2">JavaScript</span>
+                    <input type="checkbox" class="form-checkbox" onchange="handleCheckboxChange(event)"
+                        value="JavaScript" />
+                </label>
+                <label class="flex items-center w-full justify-end">
+                    <span class="mr-2">Python</span>
+                    <input type="checkbox" class="form-checkbox" onchange="handleCheckboxChange(event)" value="Python" />
+                </label>
+                <label class="flex items-center w-full justify-end">
+                    <span class="mr-2">F# (No Course)</span>
+                    <input type="checkbox" class="form-checkbox" onchange="handleCheckboxChange(event)" value="Fsharp" />
+                </label>
+            </li>
+        </ul>
+    </div>
+}

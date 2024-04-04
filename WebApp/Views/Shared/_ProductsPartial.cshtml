@@ -1,0 +1,15 @@
+@model IEnumerable<Product>
+
+<p class="px-4 mb-4">@Model.Count() products found.</p>
+
+<div class="grid grid-cols-1 gap-4 px-4 md:pr-72 pb-6">
+    @foreach (var product in Model)
+    {
+        <div
+            class="p-4 rounded-lg border col-span-1 bg-white bg-gradient-to-br from-gray-100 to-gray-200 hover:from-gray-200 hover:to-gray-300 transition duration-300 ease-in-out transform hover:scale-105 cursor-pointer">
+            <h2 class="text-base font-semibold">@product.Name</h2>
+            <p class="text-sm">@product.Description</p>
+            <p class="text-sm text-green-500">@product.Price €</p>
+        </div>
+    }
+</div>

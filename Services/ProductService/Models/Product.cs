@@ -7,6 +7,5 @@ namespace ProductsService.Models
         public string Description { get; set; }
         public decimal Price { get; set; }
         public int CategoryId { get; set; }
-        // Add any additional properties as needed
     }
 }
