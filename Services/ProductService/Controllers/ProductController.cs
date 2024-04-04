@@ -19,9 +19,9 @@ namespace ProductService.Controllers
         {
             _productDatabaseService = new ProductDatabaseService();
         }
-
+        //----------------------------------------------------------------------------------------------------------------
         // POST: api/product
-        [HttpPost]
+        [HttpPost("GetProductList")]
         public IActionResult GetProductList([FromBody] ProductQuery query)
         {
             try
@@ -40,6 +40,62 @@ namespace ProductService.Controllers
             }
             catch (Exception ex)
             {
+                Console.WriteLine(ex.Message);
+
+                // Log or handle exception
+                return StatusCode((int)HttpStatusCode.InternalServerError);
+            }
+        }
+        //----------------------------------------------------------------------------------------------------------------
+        // Create a new product
+        [HttpPost("CreateProduct")]
+        public IActionResult CreateProduct([FromBody] Product product)
+        {
+            try
+            {
+                // Add the product to the database
+                bool result = _productDatabaseService.CreateProduct(product);
+
+                if (result)
+                {
+                    return Ok();
+                }
+                else
+                {
+                    return StatusCode((int)HttpStatusCode.InternalServerError);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+
+                // Log or handle exception
+                return StatusCode((int)HttpStatusCode.InternalServerError);
+            }
+        }
+        //----------------------------------------------------------------------------------------------------------------
+        // Create a new category
+        [HttpPost("CreateCategory")]
+        public IActionResult CreateCategory([FromBody] Category category)
+        {
+            try
+            {
+                // Add the category to the database
+                bool result = _productDatabaseService.CreateCategory(category);
+
+                if (result)
+                {
+                    return Ok();
+                }
+                else
+                {
+                    return StatusCode((int)HttpStatusCode.InternalServerError);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+
                 // Log or handle exception
                 return StatusCode((int)HttpStatusCode.InternalServerError);
             }
