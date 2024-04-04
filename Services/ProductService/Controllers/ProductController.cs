@@ -24,8 +24,6 @@ namespace ProductService.Controllers
         [HttpPost]
         public IActionResult GetProductList([FromBody] ProductQuery query)
         {
-            DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss.fff");
-
             try
             {
                 // Retrieve the list of products from the database based on the query
