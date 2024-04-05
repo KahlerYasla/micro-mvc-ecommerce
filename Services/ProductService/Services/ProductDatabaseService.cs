@@ -27,6 +27,19 @@ namespace ProductService.Services
 
             // Retrieve the filtered list of products
             List<Product> productList = products.ToList();
+
+            if (productList.Count == 0)
+            {
+                productList.Add(new Product
+                {
+                    Id = 0,
+                    Name = "No products found",
+                    Description = "No products found",
+                    Price = 0,
+                    CategoryId = 0
+                });
+            }
+
             return productList;
         }
         //----------------------------------------------------------------------------------------------------------------
@@ -41,7 +54,7 @@ namespace ProductService.Services
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
+                Console.Error.WriteLine(ex.Message + "Line" + ex.StackTrace);
 
                 // Log or handle exception
                 return false;
@@ -59,7 +72,7 @@ namespace ProductService.Services
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
+                Console.Error.WriteLine(ex.Message + "Line" + ex.StackTrace);
 
                 // Log or handle exception
                 return false;
