@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
 using WebApp.Models;
+using WebApp.Services;
 
 namespace WebApp.Controllers
 {
@@ -8,46 +8,32 @@ namespace WebApp.Controllers
     [Route("api/[controller]")]
     public class ProductsController : Controller
     {
-        // Dummy data for testing
-        private static readonly List<Product> productsListFromDB = new()
+        private readonly ProductService _productService;
+
+        public ProductsController()
         {
-                new Product { Id = 1, Name = "CWPC", Description = "Complete Web Dev Course", Price = 10.0m, Category = "Csharp" },
-                new Product { Id = 2, Name = "Intro Py", Description = "Intro to Python", Price = 5.0m, Category = "Python" },
-                new Product { Id = 3, Name = "Adv Py", Description = "Advanced Python", Price = 7.0m, Category = "Python" },
-                new Product { Id = 4, Name = "Intro JS", Description = "Intro to JavaScript", Price = 5.0m, Category = "JavaScript" },
-                new Product { Id = 5, Name = "Adv JS", Description = "Advanced JavaScript", Price = 7.0m, Category = "JavaScript" },
-                new Product { Id = 6, Name = "Intro C#", Description = "Intro to C#", Price = 5.0m, Category = "Csharp" },
-                new Product { Id = 7, Name = "Adv C#", Description = "Advanced C#", Price = 7.0m, Category = "Csharp" },
-                new Product { Id = 8, Name = "Intro Java", Description = "Intro to Java", Price = 5.0m, Category = "Java" },
-                new Product { Id = 9, Name = "Adv Java", Description = "Advanced Java", Price = 7.0m, Category = "Java" },
-            };
+            _productService = new ProductService();
+        }
 
         // Get all products
         [HttpGet]
-        public IEnumerable<Product> Get()
+        public IActionResult Get()
         {
-            return productsListFromDB;
+
+            List<Product> products = new(){
+                new() { Id = 1, Name = "Product 1", Description = "Description 1", Price = 10.00m, Category = "Category 1" },
+            };
+
+            return PartialView("_ProductsPartial", products);
+
         }
 
         // Get by category
         [HttpGet("{category}")]
-        public IActionResult Get(string category)
+        public async Task<IActionResult> Get(string category)
         {
-            // Split the categories
-            string[] categories = category.Split(',');
-
             // Filter the products
-            List<Product> products = new();
-            foreach (var cat in categories)
-            {
-                foreach (var product in ProductsController.productsListFromDB)
-                {
-                    if (product.Category == cat)
-                    {
-                        products.Add(product);
-                    }
-                }
-            }
+            List<Product> products = await _productService.GetFilteredProducts(category);
 
             return PartialView("_ProductsPartial", products);
         }

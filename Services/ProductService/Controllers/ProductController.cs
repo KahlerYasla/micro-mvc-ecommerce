@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using Microsoft.AspNetCore.Mvc;
+using ProductService.Daos;
 using ProductService.Models;
 using ProductService.Services;
 
@@ -22,21 +23,27 @@ namespace ProductService.Controllers
         //----------------------------------------------------------------------------------------------------------------
         // POST: api/product
         [HttpPost("GetProductList")]
-        public IActionResult GetProductList([FromBody] ProductQuery query)
+        public ActionResult<List<Product>> GetProductList([FromBody] ProductQuery query)
         {
+            Console.WriteLine("\nGetProductList called\n");
 
-            // Retrieve the list of products from the database based on the query
-            List<Models.Product> productList = _productDatabaseService.GetProductList(query);
+            string[] queriesSplitted = query.Category?.Split(',')!;
 
-            if (productList != null && productList.Any())
+            List<ProductResponse> resultList = new();
+
+            foreach (var category in queriesSplitted)
             {
-                return Ok(productList);
-            }
-            else
-            {
-                return NotFound();
+                resultList.AddRange(_productDatabaseService.GetProductList(new ProductQuery { Category = category }));
             }
 
+            Console.WriteLine(resultList.Count);
+
+            foreach (var product in resultList)
+            {
+                Console.WriteLine(product.Name);
+            }
+
+            return Ok(resultList);
         }
         //----------------------------------------------------------------------------------------------------------------
         // Create a new product

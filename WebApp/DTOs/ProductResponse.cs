@@ -1,8 +1,8 @@
 using System.Text.Json.Serialization;
 
-namespace WebApp.Models
+namespace WebApp.DTOs
 {
-    public class Product
+    public class ProductResponse
     {
         public int Id { get; set; }
         [JsonPropertyName("name")]
@@ -10,8 +10,16 @@ namespace WebApp.Models
         [JsonPropertyName("description")]
         public required string Description { get; set; }
         [JsonPropertyName("category")]
-        public required string Category { get; set; }
+        public required Category Category { get; set; }
         [JsonPropertyName("price")]
         public required decimal Price { get; set; }
+    }
+
+    public class Category
+    {
+        [JsonPropertyName("id")]
+        public int Id { get; set; }
+        [JsonPropertyName("name")]
+        public required string Name { get; set; }
     }
 }

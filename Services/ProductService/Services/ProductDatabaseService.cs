@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using ProductService.Daos;
 using ProductService.DataAccess;
 using ProductService.Models;
 
@@ -15,7 +16,7 @@ namespace ProductService.Services
             _productContext = new ProductContext();
         }
         //----------------------------------------------------------------------------------------------------------------
-        public List<Product> GetProductList(ProductQuery query)
+        public List<ProductResponse> GetProductList(ProductQuery query)
         {
             IQueryable<Product> products = _productContext.Products;
 
@@ -25,18 +26,23 @@ namespace ProductService.Services
                 products = products.Where(p => p.CategoryId == _productContext.Categories.FirstOrDefault(c => c.Name == query.Category)!.Id);
             }
 
-            // Retrieve the filtered list of products
-            List<Product> productList = products.ToList();
+            // Create a list of products to return with Category included and find it from the database by CategoryId
+            List<ProductResponse> productList = products.Select(p => new ProductResponse
+            {
+                Name = p.Name,
+                Description = p.Description,
+                Price = p.Price,
+                Category = _productContext.Categories.FirstOrDefault(c => c.Id == p.CategoryId)!
+            }).ToList();
 
             if (productList.Count == 0)
             {
-                productList.Add(new Product
+                productList.Add(new ProductResponse
                 {
-                    Id = 0,
                     Name = "No products found",
                     Description = "No products found",
                     Price = 0,
-                    CategoryId = 0
+                    Category = new Category { Id = 0, Name = "No category found" }
                 });
             }
 
