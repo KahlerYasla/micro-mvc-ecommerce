@@ -37,7 +37,6 @@ namespace WebApp.Services
             List<ProductResponse> rawResponse = JsonSerializer.Deserialize<List<ProductResponse>>(responseBody)!;
 
             List<Product> result = new();
-
             foreach (var product in rawResponse)
             {
                 result.Add(new Product
